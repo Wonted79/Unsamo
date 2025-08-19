@@ -1,0 +1,42 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.4'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.unsamo'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	runtimeOnly 'org.postgresql:postgresql' // DB
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // JPA
+	implementation 'org.locationtech.jts:jts-core:1.18.2'                  // Geometry 타입
+	implementation 'org.hibernate:hibernate-spatial'                       // 공간 연산 (PostGIS용)
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
